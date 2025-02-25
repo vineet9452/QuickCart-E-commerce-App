@@ -1,0 +1,64 @@
+/* 🏆 Table को पूरी तरह Scrollable और Compress बनाए */
+.table-responsive {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* 🔹 Font Size छोटा और Compact Look */
+.small-text {
+  font-size: 12px;
+}
+
+/* 📱 Mobile Order Card को Grid में सेट करना */
+.order-mobile-card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08);
+  margin-bottom: 10px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* 🏷️ Individual Order Item */
+.order-mobile-card div {
+  background: white;
+  padding: 5px;
+  border-radius: 4px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 🛒 Product Card को Compact बनाए */
+.product-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  background: #fff;
+  padding: 6px;
+  border-radius: 6px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* .product-img {
+  max-width: 50px;
+  height: auto;
+} */
+
+.table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.container-fluid {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.card {
+  padding: 10px;
+}
+
