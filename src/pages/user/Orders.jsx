@@ -1,3 +1,5 @@
+{/* <p>{JSON.stringify(orders, null, 4)}</p> */ }
+
 import React, { useEffect, useState } from 'react';
 import UserMenu from '../../components/Layout/UserMenu';
 import Layout from '../../components/Layout/Layout';
@@ -28,7 +30,7 @@ const Orders = () => {
   }, [auth?.token]);
 
   return (
-   
+
     <Layout>
       <div className="container-fluid p-2">
         <div className="row">
@@ -140,4 +142,3 @@ const Orders = () => {
 };
 
 export default Orders;
-
