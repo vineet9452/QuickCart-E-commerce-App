@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
-import Layout from '../../components/Layout/Layout';
-import toast from 'react-hot-toast';
-import axios from 'axios';
+import React, { useState } from "react";
+import Layout from "../../components/Layout/Layout";
+import toast from "react-hot-toast";
+import axios from "axios";
 import "../../styles/AuthStyle.css";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';  // Import dispatch hook
-import { login } from '../../Redux/Slices/authSlices'; // Import login action
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../Redux/Slices/authSlices";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const location = useLocation()
-    const dispatch = useDispatch(); // Initialize dispatch
+    const location = useLocation();
+    const dispatch = useDispatch();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const userData = { email, password };
 
         try {
             console.log("🔄 Sending Login Request...");
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/auth/login`, userData);
+            const res = await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
+                userData
+            );
 
             console.log("✅ Login API Response:", res.data);
 
@@ -27,20 +31,25 @@ const Login = () => {
                 dispatch(login({ user: res.data.user, token: res.data.token }));
                 toast.success(res.data.message);
 
-                // ✅ लॉगिन के बाद सही पेज पर रीडायरेक्ट करो
-                const redirectPath = location.state?.from || "/";
+                // ✅ अगर कोई पुराना user logout कर चुका था, तो homepage पर redirect करें
+                const prevUserLoggedOut = sessionStorage.getItem("prevUserLoggedOut") === "true";
+
+                const redirectPath = prevUserLoggedOut ? "/" : location.state?.from || "/";
+
                 console.log(`🚀 Redirecting to: ${redirectPath}`);
-                navigate(redirectPath);
+                navigate(redirectPath, { replace: true });
+
+                // ✅ Logout की status reset करें
+                sessionStorage.removeItem("prevUserLoggedOut");
             } else {
                 toast.error(res.data.message);
             }
+
         } catch (error) {
             console.error("❌ Login API Error:", error.response?.data || error.message);
-            toast.error(error.response?.data?.message || 'Something went wrong');
+            toast.error(error.response?.data?.message || "Something went wrong");
         }
     };
-
-
 
 
     return (
