@@ -1,22 +1,24 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../Redux/Slices/authSlices";
 import toast from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
 import { Badge } from "antd";
 import { ShoppingCartOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
 
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../Redux/Slices/authSlices"; // लॉगआउट एक्शन इम्पोर्ट करें
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const categories = useCategory();
   const cart = useSelector((state) => state.cart.items);
   const auth = useSelector((state) => state.auth);
 
-  // लॉगआउट फ़ंक्शन
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout()); // Redux State से token हटाएं
+    navigate("/", { replace: true }); // Home पर भेजें ताकि पुराना पेज reset हो जाए
     toast.success("Logout Successfully");
   };
 
