@@ -1,12 +1,10 @@
-{/* <p>{JSON.stringify(orders, null, 4)}</p> */ }
-
 import React, { useEffect, useState } from 'react';
 import UserMenu from '../../components/Layout/UserMenu';
 import Layout from '../../components/Layout/Layout';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment'
-import "../../styles/Order.css";
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const auth = useSelector((state) => state.auth);
@@ -30,7 +28,8 @@ const Orders = () => {
   }, [auth?.token]);
 
   return (
-<Layout>
+   
+    <Layout>
       <div className="container-fluid p-2">
         <div className="row">
           {/* 🏠 Sidebar Menu */}
@@ -43,7 +42,7 @@ const Orders = () => {
             <h2 className="mb-3 text-primary text-center">🛍️ All Orders</h2>
 
             {orders?.map((o, i) => (
-              <div className="card shadow-sm mb-4 p-2" key={o._id}>
+              <div className="card shadow-sm mb-4 p-2 border-0" key={o._id}>
                 {/* 📌 Desktop View: Table */}
                 <div className="d-none d-md-block">
                   <div className="table-responsive">
@@ -80,8 +79,8 @@ const Orders = () => {
                   </div>
                 </div>
 
-                {/* 📱 Mobile View: Grid */}
-                <div className="d-block d-md-none order-mobile-card">
+                {/* 📱 Mobile View: Card Format */}
+                <div className="d-block d-md-none p-3 border rounded bg-light">
                   <p><strong>#</strong> {i + 1}</p>
                   <p>
                     <strong>Status:</strong>
@@ -100,31 +99,33 @@ const Orders = () => {
                   <p><strong>Quantity:</strong> {o?.products?.length}</p>
                 </div>
 
-                {/* 📦 Products in Order */}
+                {/* 📦 Ordered Products (Responsive Grid Format) */}
                 <div className="container">
-                  {o.products?.map((p) => (
-                    <div
-                      className="row mb-2 border rounded p-2 bg-light d-flex align-items-center flex-wrap product-card"
-                      key={p._id}
-                    >
-                      {/* 📸 Product Image */}
-                      <div className="col-4 text-center">
-                        <img
-                          src={`${import.meta.env.VITE_API_URL}/api/v1/product/product-photo/${p._id}`}
-                          className="img-fluid rounded shadow-sm"
-                          alt={p.name}
-                          style={{ maxWidth: "60px", height: "auto" }}
-                        />
+                  <div className="row">
+                    {o.products?.map((p) => (
+                      <div className="col-6 col-md-4 col-lg-3 mb-3" key={p._id}>
+                        <div className="card p-2 shadow-sm h-100">
+                          {/* 📸 Product Image */}
+                          <div className="text-center">
+                            <img
+                              src={`${import.meta.env.VITE_API_URL}/api/v1/product/product-photo/${p._id}`}
+                              className="img-fluid rounded product-img"
+                              alt={p.name}
+                              style={{ maxWidth: "80px", height: "auto" }}
+                            />
+                          </div>
+
+                          {/* 📝 Product Details */}
+                          <div className="text-center mt-2">
+                            <h6 className="text-primary m-0">{p.name}</h6>
+                            <p className="text-muted m-0 small-text">{p.description.substring(0, 30)}...</p>
+                            <p className="m-0"><strong>💰 Price:</strong> ${p.price}</p>
+                            <p className="m-0"><strong>📦 Qty:</strong> {p.quantity}</p>
+                          </div>
+                        </div>
                       </div>
-                      {/* 📝 Product Details */}
-                      <div className="col-8">
-                        <h6 className="text-primary m-0">{p.name}</h6>
-                        <p className="text-muted m-0">{p.description.substring(0, 30)}...</p>
-                        <p className="m-0"><strong>💰 Price:</strong> ${p.price}</p>
-                        <p className="m-0"><strong>📦 Qty:</strong> {p.quantity}</p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
 
               </div>
@@ -133,7 +134,10 @@ const Orders = () => {
         </div>
       </div>
     </Layout>
+
+
   );
 };
 
 export default Orders;
+
