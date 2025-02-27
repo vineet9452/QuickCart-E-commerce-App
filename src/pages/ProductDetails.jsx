@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux";
 import { addToCart } from "../Redux/Slices/cartSlices";
 import { toast } from 'react-toastify';
+import toast from "react-hot-toast";
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetails = () => {
